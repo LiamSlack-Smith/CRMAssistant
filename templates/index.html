@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Training Assistant</title>
+    <!-- Link to CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <!-- Base Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}"> <!-- Chat Styles -->
+    <!-- REMOVED CRM CSS Link -->
+    <!-- External JS Libraries (Load Before App Scripts) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <!-- Main application container -->
+    <div class="app-container">
+
+        <!-- Side Menu Panel (Shared Structure) -->
+        <div id="side-menu">
+             <div class="menu-header">
+                 <h2 class="menu-title">Navigation</h2>
+            </div>
+            <!-- App Navigation Buttons -->
+            <div class="menu-section">
+                 <button id="show-chat-btn" class="menu-nav-button active">Chat Assistant</button>
+                 <!-- REMOVED CRM Interface Button -->
+            </div>
+            <!-- Profile Selection -->
+            <div class="menu-section">
+                <h3 class="menu-section-title">AI Profile</h3>
+                <select id="profile-select" class="menu-select">
+                    <!-- Options populated by JS -->
+                </select>
+                <!-- New container for profile guides -->
+                <div id="profile-guides-list-container">
+                    <h4 class="menu-subsection-title">Available Guides:</h4>
+                    <ul id="profile-guides-list">
+                        <!-- Guide links populated by JS -->
+                        <li class="muted">Select a profile</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- REMOVED CRM Record Type Navigation -->
+            <!-- Theme Circles Section -->
+            <div class="menu-section">
+                <h3 class="menu-section-title">Theme</h3>
+                <div id="theme-circles-container" class="theme-circles-container">
+                    <!-- Circles populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat View Container -->
+        <div id="chat-interface-view" class="main-view">
+             <div class="header"><h1>AI Training Assistant</h1></div>
+             <div class="main-content">
+                <div class="chat-panel">
+                    <div id="chatbox">
+                         <div class="assistant-message message">
+                           <div class="message-content">Hello! Ask me a question or click a source link to view the guide. Supports .txt, .md, and .docx files.</div>
+                        </div>
+                    </div>
+                    <div id="input-area">
+                        <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off">
+                        <button id="send-button">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Chat View -->
+
+        <!-- REMOVED CRM Interface View Container -->
+
+    </div> <!-- End App Container -->
+
+
+    <!-- File Viewer Panel -->
+    <div id="file-viewer" class="file-viewer">
+         <div id="viewer-resizer" class="viewer-resizer" title="Resize Viewer"></div>
+         <div class="file-viewer-inner-wrapper">
+            <div class="file-viewer-header"> <h3 id="file-viewer-title">File Viewer</h3> <button id="close-viewer-btn" title="Close Viewer">×</button> </div>
+            <div id="file-viewer-content">Select a source link from the chat.</div>
+        </div>
+    </div>
+
+    <!-- Embed Flask variables for JS -->
+    <script>
+        // Pass Flask data to global JS scope BEFORE loading script.js
+        const embeddedThemesData = {{ themes_json | safe }} || {};
+        const embeddedDefaultThemeName = '{{ default_theme_name }}' || 'default';
+        const embeddedProfilesData = {{ profiles_json | safe }} || {}; // Pass profiles data
+        const embeddedDefaultProfileKey = '{{ default_profile_key }}' || 'default'; // Pass default profile key
+        const embeddedAllGuides = {{ all_guides_json | safe }} || []; // Pass all loaded guides
+    </script>
+
+    <!-- Link to external JavaScript files (Order Matters!) -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script> <!-- Base/Shared JS -->
+    <!-- REMOVED CRM JS Link -->
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>   <!-- Chat/Viewer Logic -->
+
+
+</body>
+</html>

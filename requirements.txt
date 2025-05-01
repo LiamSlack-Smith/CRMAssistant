@@ -1,0 +1,5 @@
+Flask
+PyYAML
+ollama
+mammoth
+google-generativeai
